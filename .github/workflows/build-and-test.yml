@@ -28,4 +28,3 @@ jobs:
 
       - name: Build and Test with Maven
         run: mvn -B verify            # -B = batch mode (no interactive output)
-

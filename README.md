@@ -13,11 +13,13 @@ The goal is not to reinvent the wheel, but to use a well-defined problem domain 
 - Applying clean, scalable architecture to a real-world domain
 - Practicing modular design that cleanly separates engine, UI, and AI components
 - Exploring algorithmic complexity through AI and move generation
+- Getting more familiar with a language (Java) — and its accompanying ecosystem — that I haven't had much experience
+  with yet.
 
 Although the initial focus is on standard chess rules, the architecture is intentionally designed to allow for future
 adaptations. This includes the possibility of supporting chess variants such as _Chess960_, _King of the Hill_, or
-custom
-board setups — without requiring fundamental changes to the engine. Flexibility and extensibility are key priorities
+custom board setups — without requiring fundamental changes to the engine. Flexibility and extensibility are key
+priorities
 throughout.
 
 The project's emphasis is on maintainability, extensibility, and clear separation of concerns — the same qualities
@@ -52,6 +54,22 @@ It is intended that players will be able to play in three modes on all interface
 ## 🚧 Status
 
 Early stages – engine architecture and core move logic under development.
+
+## 🎯 1.0 Scope
+
+The initial release (`v1.0`) will focus on:
+
+- Full implementation of standard chess rules (including castling, en passant, promotion)
+- Console UI (`cli/`) for two-player games
+- JUnit test suite for core logic
+- Clean, extensible architecture
+
+Planned for later versions:
+
+- Game persistence
+- JavaFX UI (local first; backend tie-in later)
+- REST API with web frontend
+- Computer/AI opponent
 
 ## 📖 License
 
