@@ -1,6 +1,5 @@
-package com.bradleyburgess.chess.engine;
+package com.bradleyburgess.chess.engine.domain;
 
-import com.bradleyburgess.chess.engine.domain.PieceType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
