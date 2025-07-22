@@ -1,21 +1,31 @@
 package com.bradleyburgess.chess.engine.domain;
 
+import com.bradleyburgess.chess.engine.domain.exceptions.InvalidCoordinateException;
+
 public class Square {
     private final Color color;
-    private final char file;
-    private final byte rank;
+    private final Coordinate coordinate;
     private Piece occupiedBy = null;
 
-    public Square(Color color, char file, int rank) {
+    public Square(Color color, char file, int rank) throws InvalidCoordinateException {
         this.color = color;
-        this.file = file;
-        this.rank = (byte) rank;
+        this.coordinate = new Coordinate(file, (byte) rank);
     }
 
-    public Square(Color color, char file, int rank, Piece occupiedBy) {
+    public Square(Color color, char file, int rank, Piece occupiedBy) throws InvalidCoordinateException {
         this.color = color;
-        this.file = file;
-        this.rank = (byte) rank;
+        this.coordinate = new Coordinate(file, (byte) rank);
+        this.occupiedBy = occupiedBy;
+    }
+
+    public Square(Color color, Coordinate coordinate) {
+        this.color = color;
+        this.coordinate = coordinate;
+    }
+
+    public Square(Color color, Coordinate coordinate, Piece occupiedBy) {
+        this.color = color;
+        this.coordinate = coordinate;
         this.occupiedBy = occupiedBy;
     }
 
@@ -24,11 +34,11 @@ public class Square {
     }
 
     public char getFile() {
-        return this.file;
+        return this.coordinate.file();
     }
 
-    public byte getRank() {
-        return this.rank;
+    public int getRank() {
+        return this.coordinate.rank();
     }
 
     public boolean isOccupied() {
