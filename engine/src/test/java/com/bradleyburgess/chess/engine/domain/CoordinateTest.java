@@ -20,4 +20,18 @@ class CoordinateTest {
         assertEquals(8, c.rank());
         assertEquals('e', c.file());
     }
+
+    @Test
+    void coordinate_is_a1() {
+        Coordinate c = new Coordinate('a', (byte) 1);
+        assertEquals(1, c.rank());
+        assertEquals('a', c.file());
+    }
+
+    @Test
+    void coordinate_is_h8() {
+        Coordinate c = new Coordinate('h', (byte) 8);
+        assertEquals(8, c.rank());
+        assertEquals('h', c.file());
+    }
 }

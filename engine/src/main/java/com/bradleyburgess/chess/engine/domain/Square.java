@@ -33,6 +33,10 @@ public class Square {
         return this.color;
     }
 
+    public Coordinate getCoordinate() {
+        return this.coordinate;
+    }
+
     public char getFile() {
         return this.coordinate.file();
     }

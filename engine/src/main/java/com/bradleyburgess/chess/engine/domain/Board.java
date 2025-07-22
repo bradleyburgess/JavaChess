@@ -3,6 +3,9 @@ package com.bradleyburgess.chess.engine.domain;
 import com.bradleyburgess.chess.engine.domain.exceptions.InvalidCoordinateException;
 import com.bradleyburgess.chess.engine.domain.validators.CoordinateValidator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
     private final Square[][] squares;
 
@@ -21,6 +24,33 @@ public class Board {
         char file = coordinate.charAt(0);
         int rank = (int) (coordinate.charAt(1)) - 48;
         return this.getSquare(file, rank);
+    }
+
+    public List<Square>[] getRankFrom(Coordinate coordinate) {
+        List<Square> rightList = new ArrayList<>();
+        List<Square> leftList = new ArrayList<>();
+        @SuppressWarnings("unchecked")
+        List<Square>[] result = (List<Square>[]) new List[]{rightList, leftList};
+
+        char file = coordinate.file();
+        while (file < 'h') {
+            file += 1;
+            Square s = this.getSquare(file, coordinate.rank());
+            rightList.add(s);
+        }
+
+        file = coordinate.file();
+        while (file > 'a') {
+            file -= 1;
+            Square s = this.getSquare(file, coordinate.rank());
+            leftList.add(s);
+        }
+
+        return result;
+    }
+
+    public List<Square>[] getFileFrom(Coordinate coordinate) {
+        return (List<Square>[]) new ArrayList[0];
     }
 
     /**
