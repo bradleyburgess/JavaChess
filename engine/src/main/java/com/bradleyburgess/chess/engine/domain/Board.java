@@ -13,12 +13,27 @@ public class Board {
         this.squares = makeSquares();
     }
 
+    /**
+     * Retrieve a square from the board with the given file and rank
+     *
+     * @param file
+     * @param rank
+     * @return The indicated square
+     * @throws InvalidCoordinateException
+     */
     public Square getSquare(char file, int rank) throws InvalidCoordinateException {
         file = Character.toLowerCase(file);
         CoordinateValidator.validateRankFile(file, rank);
         return squares[rank - 1][file - 'a'];
     }
 
+    /**
+     * Retrieve a square from the board with the given coordinate
+     *
+     * @param coordinate
+     * @return The indicated square
+     * @throws InvalidCoordinateException
+     */
     public Square getSquare(String coordinate) throws InvalidCoordinateException {
         CoordinateValidator.validateCoordinate(coordinate);
         char file = coordinate.charAt(0);
@@ -26,11 +41,17 @@ public class Board {
         return this.getSquare(file, rank);
     }
 
+    /**
+     * Retrieve the rank from a given square coordinate as two lists outward from the square.
+     * Lists are in the order: (1) rightward, (2) leftward
+     *
+     * @param coordinate
+     * @return A two-item array of Square Lists
+     */
     public List<Square>[] getRankFrom(Coordinate coordinate) {
         List<Square> rightList = new ArrayList<>();
         List<Square> leftList = new ArrayList<>();
-        @SuppressWarnings("unchecked")
-        List<Square>[] result = (List<Square>[]) new List[]{rightList, leftList};
+        @SuppressWarnings("unchecked") List<Square>[] result = (List<Square>[]) new List[]{rightList, leftList};
 
         char file = coordinate.file();
         while (file < 'h') {
@@ -49,6 +70,13 @@ public class Board {
         return result;
     }
 
+    /**
+     * Retrieve the file from the given square coordinate as two lists outward from the square.
+     * Lists are in the order: (1) upward, (2) downward.
+     *
+     * @param coordinate
+     * @return A two-item array of Square Lists
+     */
     public List<Square>[] getFileFrom(Coordinate coordinate) {
         List<Square> upList = new ArrayList<>();
         List<Square> downList = new ArrayList<>();
@@ -67,6 +95,59 @@ public class Board {
             rank -= 1;
             Square s = this.getSquare(coordinate.file(), rank);
             downList.add(s);
+        }
+
+        return result;
+    }
+
+    /**
+     * Retrieve the diagonals from the given square coordinate as four lists outward from the square.
+     * Lists are in clockwise order, beginning with up and to the right.
+     *
+     * @param coordinate
+     * @return A four-item array of Square Lists
+     */
+    public List<Square>[] getDiagonalsFrom(Coordinate coordinate) {
+        List<Square> upRightList = new ArrayList<>();
+        List<Square> downRightList = new ArrayList<>();
+        List<Square> downLeftList = new ArrayList<>();
+        List<Square> upLeftList = new ArrayList<>();
+        @SuppressWarnings("unchecked") List<Square>[] result = (List<Square>[]) new List[]{upRightList, downRightList, downLeftList, upLeftList};
+
+        char file = coordinate.file();
+        int rank = coordinate.rank();
+        while (file < 'h' && rank < 8) {
+            file += 1;
+            rank += 1;
+            Square s = this.getSquare(file, rank);
+            upRightList.add(s);
+        }
+
+        file = coordinate.file();
+        rank = coordinate.rank();
+        while (file < 'h' && rank > 1) {
+            file += 1;
+            rank -= 1;
+            Square s = this.getSquare(file, rank);
+            downRightList.add(s);
+        }
+
+        file = coordinate.file();
+        rank = coordinate.rank();
+        while (file > 'a' && rank > 1) {
+            file -= 1;
+            rank -= 1;
+            Square s = this.getSquare(file, rank);
+            downLeftList.add(s);
+        }
+
+        file = coordinate.file();
+        rank = coordinate.rank();
+        while (file > 'a' && rank < 8) {
+            file -= 1;
+            rank += 1;
+            Square s = this.getSquare(file, rank);
+            upLeftList.add(s);
         }
 
         return result;

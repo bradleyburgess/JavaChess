@@ -159,6 +159,24 @@ public class BoardTest {
     @Nested
     public class GetRankFromCoordinateTest {
         @Test
+        void returns_a_2_item_array() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('a', (byte) 1);
+            List<Square>[] result = b.getRankFrom(c);
+            assertEquals(2, result.length);
+        }
+
+        @Test
+        void returns_2_lists_in_array() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('a', (byte) 1);
+            List<Square>[] result = b.getRankFrom(c);
+            for (int i = 0; i < result.length; i++) {
+                assertInstanceOf(List.class, result[i]);
+            }
+        }
+
+        @Test
         void from_a1_returns_b1_through_h1() {
             Board b = new Board();
             Coordinate c = new Coordinate('a', (byte) 1);
@@ -214,6 +232,24 @@ public class BoardTest {
     @Nested
     public class GetFileFromCoordinate {
         @Test
+        void returns_a_2_item_array() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('a', (byte) 1);
+            List<Square>[] result = b.getFileFrom(c);
+            assertEquals(2, result.length);
+        }
+
+        @Test
+        void returns_2_lists_in_array() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('a', (byte) 1);
+            List<Square>[] result = b.getFileFrom(c);
+            for (int i = 0; i < result.length; i++) {
+                assertInstanceOf(List.class, result[i]);
+            }
+        }
+
+        @Test
         void from_c1_returns_c2_through_c8() {
             Board b = new Board();
             Coordinate c = new Coordinate('c', (byte) 1);
@@ -263,6 +299,76 @@ public class BoardTest {
             assertEquals(new Coordinate('d', (byte) 3), result[1].get(0).getCoordinate());
             assertEquals(new Coordinate('d', (byte) 2), result[1].get(1).getCoordinate());
             assertEquals(new Coordinate('d', (byte) 1), result[1].get(2).getCoordinate());
+        }
+    }
+
+    @Nested
+    public class GetDiagonalsFromTest {
+        @Test
+        void returns_a_4_item_array() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('a', (byte) 1);
+            List<Square>[] result = b.getDiagonalsFrom(c);
+            assertEquals(4, result.length);
+        }
+
+        @Test
+        void returns_4_lists_in_array() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('a', (byte) 1);
+            List<Square>[] result = b.getDiagonalsFrom(c);
+            for (int i = 0; i < result.length; i++) {
+                assertInstanceOf(List.class, result[i]);
+            }
+        }
+
+        @Test
+        void returns_upRight_diagonal_and_3_empty_lists() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('a', (byte) 1);
+            List<Square>[] result = b.getDiagonalsFrom(c);
+
+            assertEquals(7, result[0].size());
+            assertTrue(result[1].isEmpty());
+            assertTrue(result[2].isEmpty());
+            assertTrue(result[3].isEmpty());
+
+            List<Square> upRight = result[0];
+            for (int i = 0; i < upRight.size(); i++) {
+                assertEquals(new Coordinate((char) ('b' + i), (byte) (2 + i)), upRight.get(i).getCoordinate());
+            }
+        }
+
+        @Test
+        void returns_4_lists_from_d4() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('d', (byte) 4);
+            List<Square>[] result = b.getDiagonalsFrom(c);
+            List<Square> upRight = result[0];
+            List<Square> downRight = result[1];
+            List<Square> downLeft = result[2];
+            List<Square> upLeft = result[3];
+
+            assertEquals(4, upRight.size());
+            assertEquals(3, downRight.size());
+            assertEquals(3, downLeft.size());
+            assertEquals(3, upLeft.size());
+
+            for (int i = 0; i < upRight.size(); i++) {
+                assertEquals(new Coordinate((char) ('e' + i), (byte) (5 + i)), upRight.get(i).getCoordinate());
+            }
+
+            for (int i = 0; i < downRight.size(); i++) {
+                assertEquals(new Coordinate((char) ('e' + i), (byte) (3 - i)), downRight.get(i).getCoordinate());
+            }
+
+            for (int i = 0; i < downLeft.size(); i++) {
+                assertEquals(new Coordinate((char) ('c' - i), (byte) (3 - i)), downLeft.get(i).getCoordinate());
+            }
+
+            for (int i = 0; i < upLeft.size(); i++) {
+                assertEquals(new Coordinate((char) ('c' - i), (byte) (5 + i)), upLeft.get(i).getCoordinate());
+            }
         }
     }
 }
