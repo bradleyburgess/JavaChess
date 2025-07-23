@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -369,6 +370,76 @@ public class BoardTest {
             for (int i = 0; i < upLeft.size(); i++) {
                 assertEquals(new Coordinate((char) ('c' - i), (byte) (5 + i)), upLeft.get(i).getCoordinate());
             }
+        }
+    }
+
+    @Nested
+    public class GetLsFromTest {
+        @Test
+        void returns_a_list() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('d', (byte) 4);
+            List<Square> result = b.getLsFrom(c);
+            assertInstanceOf(List.class, result);
+        }
+
+        @Test
+        void returns_a_list_of_squares() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('d', (byte) 4);
+            List<Square> result = b.getLsFrom(c);
+            for (Object o : result) {
+                assertInstanceOf(Square.class, o);
+            }
+        }
+
+        @Test
+        void returns_8_squares_from_d4() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('d', (byte) 4);
+            List<Square> result = b.getLsFrom(c);
+            assertEquals(8, result.size());
+        }
+
+        @Test
+        void from_d4_returns_f5_f3_e2_c2_b3_b5_c6_e6() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('d', (byte) 4);
+            List<Square> result = b.getLsFrom(c);
+
+            assertEquals(8, result.size());
+            assertEquals(new Coordinate('f', (byte) 5), result.get(0).getCoordinate());
+            assertEquals(new Coordinate('f', (byte) 3), result.get(1).getCoordinate());
+            assertEquals(new Coordinate('e', (byte) 2), result.get(2).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 2), result.get(3).getCoordinate());
+            assertEquals(new Coordinate('b', (byte) 3), result.get(4).getCoordinate());
+            assertEquals(new Coordinate('b', (byte) 5), result.get(5).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 6), result.get(6).getCoordinate());
+            assertEquals(new Coordinate('e', (byte) 6), result.get(7).getCoordinate());
+        }
+
+        @Test
+        void from_a1_returns_c2_b3() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('a', (byte) 1);
+            List<Square> result = b.getLsFrom(c);
+
+            assertEquals(2, result.size());
+            assertEquals(new Coordinate('c', (byte) 2), result.get(0).getCoordinate());
+            assertEquals(new Coordinate('b', (byte) 3), result.get(1).getCoordinate());
+        }
+
+        @Test
+        void from_h4_returns_g2_f3_f5_g6() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('h', (byte) 4);
+            List<Square> result = b.getLsFrom(c);
+
+            assertEquals(4, result.size());
+            assertEquals(new Coordinate('g', (byte) 2), result.get(0).getCoordinate());
+            assertEquals(new Coordinate('f', (byte) 3), result.get(1).getCoordinate());
+            assertEquals(new Coordinate('f', (byte) 5), result.get(2).getCoordinate());
+            assertEquals(new Coordinate('g', (byte) 6), result.get(3).getCoordinate());
         }
     }
 }

@@ -154,6 +154,53 @@ public class Board {
     }
 
     /**
+     * Retrieve the list of L squares from the given square coordinate.
+     * The list is in clockwise order, beginning with the square two spaces right, one space up.
+     *
+     * @param coordinate
+     * @return The list of squares
+     */
+    public List<Square> getLsFrom(Coordinate coordinate) {
+        char file = coordinate.file();
+        byte rank = coordinate.rank();
+        List<Square> result = new ArrayList<>();
+        if ((char) (file + 2) <= 'h') {
+            if (rank + 1 <= 8) {
+                result.add(this.getSquare((char) (file + 2), (byte) (rank + 1)));
+            }
+            if (rank - 1 >= 1) {
+                result.add(this.getSquare((char) (file + 2), (byte) (rank - 1)));
+            }
+        }
+        if (rank - 2 >= 1) {
+            if ((char) (file + 1) <= 'h') {
+                result.add(this.getSquare((char) (file + 1), (byte) (rank - 2)));
+            }
+            if ((char) (file - 1) >= 'a') {
+                result.add(this.getSquare((char) (file - 1), (byte) (rank - 2)));
+            }
+        }
+        if ((char) (file - 2) >= 'a') {
+            if (rank - 1 >= 1) {
+                result.add(this.getSquare((char) (file - 2), (byte) (rank - 1)));
+            }
+            if (rank + 1 <= 8) {
+                result.add(this.getSquare((char) (file - 2), (byte) (rank + 1)));
+            }
+        }
+        if (rank + 2 <= 8) {
+            if ((char) (file - 1) >= 'a') {
+                result.add(this.getSquare((char) (file - 1), (byte) (rank + 2)));
+            }
+            if ((char) (file + 1) <= 'h') {
+                result.add(this.getSquare((char) (file + 1), (byte) (rank + 2)));
+            }
+        }
+
+        return result;
+    }
+
+    /**
      * Calculate whether a square should be black or white, based on
      * zero-indexed rank and file
      *
