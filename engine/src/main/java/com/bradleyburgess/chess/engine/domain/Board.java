@@ -50,7 +50,26 @@ public class Board {
     }
 
     public List<Square>[] getFileFrom(Coordinate coordinate) {
-        return (List<Square>[]) new ArrayList[0];
+        List<Square> upList = new ArrayList<>();
+        List<Square> downList = new ArrayList<>();
+        @SuppressWarnings("unchecked")
+        List<Square>[] result = (List<Square>[]) new List[]{upList, downList};
+
+        int rank = coordinate.rank();
+        while (rank < 8) {
+            rank += 1;
+            Square s = this.getSquare(coordinate.file(), rank);
+            upList.add(s);
+        }
+
+        rank = coordinate.rank();
+        while (rank > 1) {
+            rank -= 1;
+            Square s = this.getSquare(coordinate.file(), rank);
+            downList.add(s);
+        }
+
+        return result;
     }
 
     /**

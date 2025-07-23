@@ -158,9 +158,8 @@ public class BoardTest {
 
     @Nested
     public class GetRankFromCoordinateTest {
-        //        @Disabled
         @Test
-        void returns_b1_through_h1() {
+        void from_a1_returns_b1_through_h1() {
             Board b = new Board();
             Coordinate c = new Coordinate('a', (byte) 1);
             List<Square>[] result = b.getRankFrom(c);
@@ -177,7 +176,24 @@ public class BoardTest {
         }
 
         @Test
-        void returns_d2_through_h2_and_b2_through_a2() {
+        void from_h2_returns_g2_through_a2() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('h', (byte) 2);
+            List<Square>[] result = b.getRankFrom(c);
+            assertTrue(result[0].isEmpty());
+            assertEquals(7, result[1].size());
+
+            assertEquals(new Coordinate('g', (byte) 2), result[1].get(0).getCoordinate());
+            assertEquals(new Coordinate('f', (byte) 2), result[1].get(1).getCoordinate());
+            assertEquals(new Coordinate('e', (byte) 2), result[1].get(2).getCoordinate());
+            assertEquals(new Coordinate('d', (byte) 2), result[1].get(3).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 2), result[1].get(4).getCoordinate());
+            assertEquals(new Coordinate('b', (byte) 2), result[1].get(5).getCoordinate());
+            assertEquals(new Coordinate('a', (byte) 2), result[1].get(6).getCoordinate());
+        }
+
+        @Test
+        void from_c2_returns_d2_through_h2_and_b2_through_a2() {
             Board b = new Board();
             Coordinate c = new Coordinate('c', (byte) 2);
             List<Square>[] result = b.getRankFrom(c);
@@ -192,6 +208,61 @@ public class BoardTest {
 
             assertEquals(new Coordinate('b', (byte) 2), result[1].get(0).getCoordinate());
             assertEquals(new Coordinate('a', (byte) 2), result[1].get(1).getCoordinate());
+        }
+    }
+
+    @Nested
+    public class GetFileFromCoordinate {
+        @Test
+        void from_c1_returns_c2_through_c8() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('c', (byte) 1);
+            List<Square>[] result = b.getFileFrom(c);
+            assertTrue(result[1].isEmpty());
+            assertEquals(7, result[0].size());
+
+            assertEquals(new Coordinate('c', (byte) 2), result[0].get(0).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 3), result[0].get(1).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 4), result[0].get(2).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 5), result[0].get(3).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 6), result[0].get(4).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 7), result[0].get(5).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 8), result[0].get(6).getCoordinate());
+        }
+
+        @Test
+        void from_c8_returns_c7_through_c1() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('c', (byte) 8);
+            List<Square>[] result = b.getFileFrom(c);
+            assertTrue(result[0].isEmpty());
+            assertEquals(7, result[1].size());
+
+            assertEquals(new Coordinate('c', (byte) 7), result[1].get(0).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 6), result[1].get(1).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 5), result[1].get(2).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 4), result[1].get(3).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 3), result[1].get(4).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 2), result[1].get(5).getCoordinate());
+            assertEquals(new Coordinate('c', (byte) 1), result[1].get(6).getCoordinate());
+        }
+
+        @Test
+        void from_d4_returns_d5_through_d8_and_d3_through_d1() {
+            Board b = new Board();
+            Coordinate c = new Coordinate('d', (byte) 4);
+            List<Square>[] result = b.getFileFrom(c);
+            assertEquals(4, result[0].size());
+            assertEquals(3, result[1].size());
+
+            assertEquals(new Coordinate('d', (byte) 5), result[0].get(0).getCoordinate());
+            assertEquals(new Coordinate('d', (byte) 6), result[0].get(1).getCoordinate());
+            assertEquals(new Coordinate('d', (byte) 7), result[0].get(2).getCoordinate());
+            assertEquals(new Coordinate('d', (byte) 8), result[0].get(3).getCoordinate());
+
+            assertEquals(new Coordinate('d', (byte) 3), result[1].get(0).getCoordinate());
+            assertEquals(new Coordinate('d', (byte) 2), result[1].get(1).getCoordinate());
+            assertEquals(new Coordinate('d', (byte) 1), result[1].get(2).getCoordinate());
         }
     }
 }
