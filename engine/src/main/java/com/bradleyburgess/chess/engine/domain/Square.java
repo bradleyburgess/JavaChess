@@ -7,17 +7,6 @@ public class Square {
     private final Coordinate coordinate;
     private Piece occupiedBy = null;
 
-    public Square(Color color, char file, int rank) throws InvalidCoordinateException {
-        this.color = color;
-        this.coordinate = new Coordinate(file, rank);
-    }
-
-    public Square(Color color, char file, int rank, Piece occupiedBy) throws InvalidCoordinateException {
-        this.color = color;
-        this.coordinate = new Coordinate(file, rank);
-        this.occupiedBy = occupiedBy;
-    }
-
     public Square(Color color, Coordinate coordinate) {
         this.color = color;
         this.coordinate = coordinate;

@@ -69,7 +69,7 @@ public class BoardTest {
         void has_a1_coordinate() {
             Board b = new Board();
             try {
-                Square s = b.getSquare("a1");
+                Square s = b.getSquare(new Coordinate('a', 1));
                 assertEquals('a', s.getFile());
                 assertEquals(1, s.getRank());
                 assertEquals(Color.BLACK, s.getColor());
@@ -77,82 +77,19 @@ public class BoardTest {
                 fail("Invalid coordinate given");
             }
 
-        }
-
-        @Test
-        void has_a1_rank_file() {
-            Board b = new Board();
-            try {
-                Square s = b.getSquare('a', 1);
-                assertEquals('a', s.getFile());
-                assertEquals(1, s.getRank());
-                assertEquals(Color.BLACK, s.getColor());
-            } catch (InvalidCoordinateException e) {
-                fail("Invalid coordinate given");
-            }
         }
 
         @Test
         void has_c6_coordinate() {
             Board b = new Board();
             try {
-                Square s = b.getSquare("c6");
+                Square s = b.getSquare(new Coordinate('c', 6));
                 assertEquals('c', s.getFile());
                 assertEquals(6, s.getRank());
             } catch (InvalidCoordinateException e) {
                 fail("Invalid coordinate given");
             }
 
-        }
-
-        @Test
-        void has_c6_rank_file() {
-            Board b = new Board();
-            try {
-                Square s = b.getSquare('c', 6);
-                assertEquals('c', s.getFile());
-                assertEquals(6, s.getRank());
-            } catch (InvalidCoordinateException e) {
-                fail("Invalid coordinate given");
-            }
-        }
-
-        @Test
-        void throws_error_for_bad_file() {
-            Board b = new Board();
-            assertThrows(InvalidCoordinateException.class, () -> {
-                b.getSquare("j8");
-            });
-        }
-
-        @Test
-        void throws_error_for_bad_rank() {
-            Board b = new Board();
-            assertThrows(InvalidCoordinateException.class, () -> {
-                b.getSquare("a0");
-            });
-        }
-
-        @Test
-        void accepts_uppercase() {
-            Board b = new Board();
-            try {
-                Square s = b.getSquare('A', 1);
-                assertEquals('a', s.getFile());
-            } catch (InvalidCoordinateException e) {
-                fail("Invalid coordinate given");
-            }
-        }
-
-        @Test
-        void accepts_uppercase_coordinate() {
-            Board b = new Board();
-            try {
-                Square s = b.getSquare("A1");
-                assertEquals('a', s.getFile());
-            } catch (InvalidCoordinateException e) {
-                fail("Invalid coordinate given");
-            }
         }
     }
 
