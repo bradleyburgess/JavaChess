@@ -13,7 +13,7 @@ class CoordinateValidatorTest {
         @Test
         void does_not_throw_for_valid() {
             try {
-                CoordinateValidator.validateRankFile('a', 1);
+                CoordinateValidator.validateFileRank('a', 1);
             } catch (InvalidCoordinateException e) {
                 fail(e.getMessage());
             }
@@ -23,14 +23,14 @@ class CoordinateValidatorTest {
         @Test
         void throws_for_bad_file() {
             assertThrows(InvalidCoordinateException.class, () -> {
-                CoordinateValidator.validateRankFile('j', 1);
+                CoordinateValidator.validateFileRank('j', 1);
             });
         }
 
         @Test
         void throws_for_bad_rank() {
             assertThrows(InvalidCoordinateException.class, () -> {
-                CoordinateValidator.validateRankFile('a', 9);
+                CoordinateValidator.validateFileRank('a', 9);
             });
         }
     }

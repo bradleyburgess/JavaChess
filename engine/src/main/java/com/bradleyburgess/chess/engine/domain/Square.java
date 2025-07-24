@@ -9,12 +9,12 @@ public class Square {
 
     public Square(Color color, char file, int rank) throws InvalidCoordinateException {
         this.color = color;
-        this.coordinate = new Coordinate(file, (byte) rank);
+        this.coordinate = new Coordinate(file, rank);
     }
 
     public Square(Color color, char file, int rank, Piece occupiedBy) throws InvalidCoordinateException {
         this.color = color;
-        this.coordinate = new Coordinate(file, (byte) rank);
+        this.coordinate = new Coordinate(file, rank);
         this.occupiedBy = occupiedBy;
     }
 
@@ -38,11 +38,11 @@ public class Square {
     }
 
     public char getFile() {
-        return this.coordinate.file();
+        return this.coordinate.getFile();
     }
 
     public int getRank() {
-        return this.coordinate.rank();
+        return this.coordinate.getRank();
     }
 
     public boolean isOccupied() {

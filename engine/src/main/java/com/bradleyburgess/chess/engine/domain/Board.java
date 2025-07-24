@@ -23,7 +23,7 @@ public class Board {
      */
     public Square getSquare(char file, int rank) throws InvalidCoordinateException {
         file = Character.toLowerCase(file);
-        CoordinateValidator.validateRankFile(file, rank);
+        CoordinateValidator.validateFileRank(file, rank);
         return squares[rank - 1][file - 'a'];
     }
 
@@ -53,17 +53,17 @@ public class Board {
         List<Square> leftList = new ArrayList<>();
         @SuppressWarnings("unchecked") List<Square>[] result = (List<Square>[]) new List[]{rightList, leftList};
 
-        char file = coordinate.file();
+        char file = coordinate.getFile();
         while (file < 'h') {
             file += 1;
-            Square s = this.getSquare(file, coordinate.rank());
+            Square s = this.getSquare(file, coordinate.getRank());
             rightList.add(s);
         }
 
-        file = coordinate.file();
+        file = coordinate.getFile();
         while (file > 'a') {
             file -= 1;
-            Square s = this.getSquare(file, coordinate.rank());
+            Square s = this.getSquare(file, coordinate.getRank());
             leftList.add(s);
         }
 
@@ -83,17 +83,17 @@ public class Board {
         @SuppressWarnings("unchecked")
         List<Square>[] result = (List<Square>[]) new List[]{upList, downList};
 
-        int rank = coordinate.rank();
+        int rank = coordinate.getRank();
         while (rank < 8) {
             rank += 1;
-            Square s = this.getSquare(coordinate.file(), rank);
+            Square s = this.getSquare(coordinate.getFile(), rank);
             upList.add(s);
         }
 
-        rank = coordinate.rank();
+        rank = coordinate.getRank();
         while (rank > 1) {
             rank -= 1;
-            Square s = this.getSquare(coordinate.file(), rank);
+            Square s = this.getSquare(coordinate.getFile(), rank);
             downList.add(s);
         }
 
@@ -114,8 +114,8 @@ public class Board {
         List<Square> upLeftList = new ArrayList<>();
         @SuppressWarnings("unchecked") List<Square>[] result = (List<Square>[]) new List[]{upRightList, downRightList, downLeftList, upLeftList};
 
-        char file = coordinate.file();
-        int rank = coordinate.rank();
+        char file = coordinate.getFile();
+        int rank = coordinate.getRank();
         while (file < 'h' && rank < 8) {
             file += 1;
             rank += 1;
@@ -123,8 +123,8 @@ public class Board {
             upRightList.add(s);
         }
 
-        file = coordinate.file();
-        rank = coordinate.rank();
+        file = coordinate.getFile();
+        rank = coordinate.getRank();
         while (file < 'h' && rank > 1) {
             file += 1;
             rank -= 1;
@@ -132,8 +132,8 @@ public class Board {
             downRightList.add(s);
         }
 
-        file = coordinate.file();
-        rank = coordinate.rank();
+        file = coordinate.getFile();
+        rank = coordinate.getRank();
         while (file > 'a' && rank > 1) {
             file -= 1;
             rank -= 1;
@@ -141,8 +141,8 @@ public class Board {
             downLeftList.add(s);
         }
 
-        file = coordinate.file();
-        rank = coordinate.rank();
+        file = coordinate.getFile();
+        rank = coordinate.getRank();
         while (file > 'a' && rank < 8) {
             file -= 1;
             rank += 1;
@@ -161,39 +161,39 @@ public class Board {
      * @return The list of squares
      */
     public List<Square> getLsFrom(Coordinate coordinate) {
-        char file = coordinate.file();
-        byte rank = coordinate.rank();
+        char file = coordinate.getFile();
+        int rank = coordinate.getRank();
         List<Square> result = new ArrayList<>();
         if ((char) (file + 2) <= 'h') {
             if (rank + 1 <= 8) {
-                result.add(this.getSquare((char) (file + 2), (byte) (rank + 1)));
+                result.add(this.getSquare((char) (file + 2), rank + 1));
             }
             if (rank - 1 >= 1) {
-                result.add(this.getSquare((char) (file + 2), (byte) (rank - 1)));
+                result.add(this.getSquare((char) (file + 2), rank - 1));
             }
         }
         if (rank - 2 >= 1) {
             if ((char) (file + 1) <= 'h') {
-                result.add(this.getSquare((char) (file + 1), (byte) (rank - 2)));
+                result.add(this.getSquare((char) (file + 1), rank - 2));
             }
             if ((char) (file - 1) >= 'a') {
-                result.add(this.getSquare((char) (file - 1), (byte) (rank - 2)));
+                result.add(this.getSquare((char) (file - 1), rank - 2));
             }
         }
         if ((char) (file - 2) >= 'a') {
             if (rank - 1 >= 1) {
-                result.add(this.getSquare((char) (file - 2), (byte) (rank - 1)));
+                result.add(this.getSquare((char) (file - 2), rank - 1));
             }
             if (rank + 1 <= 8) {
-                result.add(this.getSquare((char) (file - 2), (byte) (rank + 1)));
+                result.add(this.getSquare((char) (file - 2), rank + 1));
             }
         }
         if (rank + 2 <= 8) {
             if ((char) (file - 1) >= 'a') {
-                result.add(this.getSquare((char) (file - 1), (byte) (rank + 2)));
+                result.add(this.getSquare((char) (file - 1), rank + 2));
             }
             if ((char) (file + 1) <= 'h') {
-                result.add(this.getSquare((char) (file + 1), (byte) (rank + 2)));
+                result.add(this.getSquare((char) (file + 1), rank + 2));
             }
         }
 
