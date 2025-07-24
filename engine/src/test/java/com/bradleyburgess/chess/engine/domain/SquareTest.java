@@ -50,4 +50,17 @@ public class SquareTest {
         Square s = new Square(Color.WHITE, new Coordinate('g', 2));
         assertEquals('g', s.getFile());
     }
+
+    @Test
+    void piece_is_null() {
+        Square s = new Square(Color.WHITE, new Coordinate('a', 1));
+        assertNull(s.getPiece());
+    }
+
+    @Test
+    void piece_is_black_rook() {
+        Piece p = new Piece(PieceType.ROOK, Color.BLACK);
+        Square s = new Square(Color.WHITE, new Coordinate('h', 8), p);
+        assertEquals(p, s.getPiece());
+    }
 }

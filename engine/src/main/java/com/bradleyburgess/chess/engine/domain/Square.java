@@ -1,7 +1,5 @@
 package com.bradleyburgess.chess.engine.domain;
 
-import com.bradleyburgess.chess.engine.domain.exceptions.InvalidCoordinateException;
-
 public class Square {
     private final Color color;
     private final Coordinate coordinate;
@@ -36,6 +34,10 @@ public class Square {
 
     public boolean isOccupied() {
         return this.occupiedBy != null;
+    }
+
+    public Piece getPiece() {
+        return this.occupiedBy;
     }
 
     public void occupy(Piece piece) {

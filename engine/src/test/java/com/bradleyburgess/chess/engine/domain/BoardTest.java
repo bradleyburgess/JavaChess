@@ -1,6 +1,7 @@
 package com.bradleyburgess.chess.engine.domain;
 
 import com.bradleyburgess.chess.engine.domain.exceptions.InvalidCoordinateException;
+import com.bradleyburgess.chess.engine.domain.exceptions.InvalidMoveException;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -90,6 +91,60 @@ public class BoardTest {
                 fail("Invalid coordinate given");
             }
 
+        }
+    }
+
+    @Nested
+    public class MakeMoveTest {
+        @Test
+        void returns_null_result() {
+            Board b = new Board();
+            b.getSquare(new Coordinate('a', 1)).occupy(new Piece(PieceType.ROOK, Color.WHITE));
+            MoveResult result = b.makeMove(new Move(new Coordinate('a', 1), new Coordinate('a', 2)));
+            assertNull(result.capturedPiece());
+        }
+
+        @Test
+        void invalid_move_if_unoccupied() {
+            Board b = new Board();
+            Coordinate cFrom = new Coordinate('a', 1);
+            Coordinate cTo = new Coordinate('a', 2);
+            assertThrows(InvalidMoveException.class, () -> {
+                b.makeMove(new Move(cFrom, cTo));
+            });
+        }
+
+        @Test
+        void a1_moves_to_a2() {
+            Board b = new Board();
+            Piece p = new Piece(PieceType.KING, Color.WHITE);
+            Coordinate cFrom = new Coordinate('a', 1);
+            Coordinate cTo = new Coordinate('a', 2);
+            b.getSquare(cFrom).occupy(p);
+            b.makeMove(new Move(cFrom, cTo));
+            Piece a2Piece = b.getSquare(cTo).getPiece();
+            assertEquals(p, a2Piece);
+            assertFalse(b.getSquare(cFrom).isOccupied());
+        }
+
+        @Test
+        void returns_captured_piece() {
+            Board b = new Board();
+            Piece pFrom = new Piece(PieceType.KING, Color.WHITE);
+            Piece pTo = new Piece(PieceType.PAWN, Color.BLACK);
+            Coordinate cFrom = new Coordinate('a', 1);
+            Coordinate cTo = new Coordinate('a', 2);
+            b.getSquare(cFrom).occupy(pFrom);
+            b.getSquare(cTo).occupy(pTo);
+            MoveResult result = b.makeMove(new Move(cFrom, cTo));
+            Piece a1Piece = b.getSquare(cFrom).getPiece();
+            Piece a2Piece = b.getSquare(cTo).getPiece();
+
+            assertEquals(pFrom, b.getSquare(cTo).getPiece());
+            assertNull(b.getSquare(cFrom).getPiece());
+            assertFalse(b.getSquare(cFrom).isOccupied());
+            assertTrue(b.getSquare(cTo).isOccupied());
+            assertEquals(pTo, result.capturedPiece());
         }
     }
 

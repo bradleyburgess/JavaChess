@@ -1,5 +1,7 @@
 package com.bradleyburgess.chess.engine.domain;
 
+import com.bradleyburgess.chess.engine.domain.exceptions.InvalidMoveException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,19 @@ public class Board {
      */
     public Square getSquare(Coordinate coordinate) {
         return squares[coordinate.getRank() - 1][coordinate.getFile() - 'a'];
+    }
+
+    public MoveResult makeMove(Move move) throws InvalidMoveException {
+        Square from = this.getSquare(move.from());
+        Square to = this.getSquare(move.to());
+        if (!from.isOccupied()) {
+            throw new InvalidMoveException("FROM Square is not occupied!");
+        }
+        Piece capturedPiece = to.getPiece();
+        MoveResult moveResult = new MoveResult(capturedPiece);
+        Piece p = from.vacate();
+        to.occupy(p);
+        return moveResult;
     }
 
     /**
