@@ -145,6 +145,8 @@ public class BoardTest {
             assertFalse(b.getSquare(cFrom).isOccupied());
             assertTrue(b.getSquare(cTo).isOccupied());
             assertEquals(pTo, result.capturedPiece());
+            assertNull(a1Piece);
+            assertEquals(pFrom, a2Piece);
         }
     }
 
